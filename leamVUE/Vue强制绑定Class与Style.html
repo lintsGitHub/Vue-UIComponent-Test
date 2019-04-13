@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 引入VUE -->
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<title>Vue强制绑定Class与Style</title>
+		<style>
+			.binderClass{
+				color: blue;
+			}
+			.changeClass{
+				color: green;
+			}
+			.orginClass{
+				font-size: 30px;
+				/* color: yellow; */
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">	
+		<!-- 当我们有一个是固定一个是动态需要改变的Class样式，他们会合并在一起，如果动态与固定的一个属性有冲突，会直接使用固定的一个样式-->
+			<h3 class="orginClass" :class="aclass">Class绑定字符串</h3>
+			<h3 class="orginClass" :class="{binderClass : isBinder , changeClass : isChange}">Class绑定对象</h3>
+			<h3 :class="['orginClass','changeClass']" >Class绑定数组</h3>
+			<button  @click="classBtn">改变颜色</button>
+			<h3>style绑定</h3>
+			
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el : '#app',
+				data : {
+					aclass : 'binderClass',
+					isBinder : true ,
+					isChange : false
+				},
+				methods : {
+					classBtn(){
+						this.aclass = 'changeClass'
+						this.isBinder = false
+						this.isChange = true
+					}
+				}
+				
+			})
+		</script>
+	</body>
+</html>

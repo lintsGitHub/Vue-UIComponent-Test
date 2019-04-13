@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		
+		<title>强制绑定Style</title>
+	</head>
+	<body>
+		<div id="app">
+			<h3 :style="{color : acolor}">改变style</h3>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el : '#app',
+				data : {
+					acolor : 'red'
+				}
+			})
+		</script>
+	</body>
+</html>
