@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 引入VUE -->
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<title>列表渲染</title>
+	</head>
+	<body>
+		
+		<div id="app">
+			<ul>
+				<h3>使用v-for来进行遍历数组</h3>
+				<!-- 
+					一般v-for都是和：key一起使用的 
+					这个语法有点像java的foreach循环
+					但他可以传两个参数，项 ，下标
+				 -->
+				<li v-for="(obj,index) in Student" :key="index" >
+				  {{index}}===={{obj.name}} ===== {{obj.age}}======
+				  <button @click="dele(index)">删除</button>=======
+				  <button @click="update(index,{name:'小明',age:22})">更新</button>
+				</li>
+			</ul>
+			<h3>使用 v-for 遍历对象</h3>
+			<ul>
+				<li v-for="(value,key) in Student[4]" :key="key">
+					{{value}}---{{key}}
+				</li>
+			</ul>
+		</div>
+		
+		
+		<script type="text/javascript">
+			new Vue({
+				el : '#app',
+				data : {
+					Student :[
+						{name : 'hello', age : 23},
+						{name : 'word', age : 34},
+						{name : 'sudo', age : 45},
+						{name : 'lint', age : 24},
+						{name : 'json', age : 25}
+					]
+				},
+				methods : {
+					dele(index){
+						// 我们就可以通过传过来的一个index来删除数组中对应的元素
+						this.Student.splice(index,1);
+					},
+					update(index , stu){
+						/* 这个就不会改变页面上的效果 
+						 但是他改变了Student的一个内部数据
+						 为什么是这样呢
+						 我们有一个概念就是数据绑定
+						 Vue本身只是监听了Student的改变，并没有监视数组内部数据的改变
+						 Vue重写了数组中的一系列改变数组内部数据的方法（先去调用原生的方法，然后更新页面） 数组内部改变，界面自动变化
+						 */
+						// this.Student[index] = stu  //并没有改变Student这个数组，只是改变了数组里的一些值，并没有调用变异方法，vue不会更新界面
+						this.Student.splice(index,1,stu)
+						/* splice 方法可以实现增删改
+						增
+						splice(index,0,stu)
+						删除
+						splice(index , 1)
+						改
+						splice(index,1,stu) */
+					}
+				}
+			})
+		</script>
+		
+	</body>
+</html>

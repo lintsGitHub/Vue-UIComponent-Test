@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 引入VUE -->
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<title>事件处理</title>
+	</head>
+	<body>
+		<dvi id="app">
+			<h3>绑定监听</h3>
+			<button @click="test1">事件一</button>
+			<button @click="test2('事件二')">事件二</button>
+			<!-- 还可以传一个事件源对象哦 -->
+			<button @click="test3($event)">事件三</button>
+			<button @click="test4(123434,$event)">事件四</button>
+		</dvi>
+		<script type="text/jscript">
+			new Vue({
+				el : '#app',
+				data : {
+					test1(){
+						alert('事件一');
+					},
+					test2(parm){
+						alert(parm);
+					},
+					test3(event){
+						<!-- 可以传一个事件源对象 -->
+						<!-- console.log(event) -->
+						alert(event.target.innerText);
+					},
+					test4(number , event){
+						alert(number + '========' + event.target.innerText)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

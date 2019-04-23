@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- 引入VUE -->
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<title>列表搜索</title>
+	</head>
+	<body>
+		<!-- 1，列表过滤 -->
+		
+		<div id="app">
+			<input type="text" v-model="search">
+			<ul>
+				<li v-for="(obj , index) in StudentFilter" :key="index">
+					{{index}} --- {{obj.name}} ---- {{obj.age}}
+				</li>
+			</ul>
+			<button @click="setOrderType(1)">年龄升序</button>
+			<button @click="setOrderType(2)">年龄降序</button>
+			<button @click="setOrderType(0)">默认排序</button>
+		</div>
+		
+		
+		<script type="text/javascript">
+			new Vue({
+				el : "#app",
+				data : {
+					search : '',
+					orderType : 0,
+					Student :[
+						{name : 'hello', age : 23},
+						{name : 'word', age : 34},
+						{name : 'sudo', age : 45},
+						{name : 'lint', age : 24},
+						{name : 'json', age : 25}
+					]
+				},
+				
+				computed : {
+					StudentFilter(){
+						// 取出相关的数据
+						const {search,Student,orderType} = this;
+						// 最终要显示的数据
+						let stu;
+						// 对数据进行筛选
+						stu = Student.filter(s => s.name.indexOf(search) !== -1);
+						/* 
+							如果orderType是0的话就不排序
+							1，升序
+							2，降序
+						 */
+						// 排序
+						if(orderType!==0){
+							stu.sort(function(s1,s2){
+								
+								if(orderType === 1){
+									return s1.age - s2.age;
+								}else{
+									return s2.age - s1.age;
+								}
+							})
+						}
+						
+						return stu
+						
+					}
+				},
+				methods:{
+					setOrderType(orderType){
+						this.orderType = orderType;
+					}
+				}
+			})
+		</script>
+	</body>
+	
+</html>
