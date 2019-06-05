@@ -10,32 +10,61 @@
 	<body>
 		<dvi id="app">
 			<h3>绑定监听</h3>
-			<button @click="test1">事件一</button>
-			<button @click="test2('事件二')">事件二</button>
+			<button v-on:click="test1">事件一</button>
+			<button v-on:click="test2('事件二')">事件二</button>
 			<!-- 还可以传一个事件源对象哦 -->
 			<button @click="test3($event)">事件三</button>
 			<button @click="test4(123434,$event)">事件四</button>
+
+			<h3>事件修饰符</h3>
+			<p>我们可以使用stop事件修饰符进行阻止事件冒泡</p>
+			<div style="width: 500px;height: 500px;background-color: red;" v-on:click="test5()">
+				<div style="height:300px;width:300px;background-color: #0000FF;" @click.stop="test6()"></div>
+			</div>
+			<p>我们还可以使用 事件修饰符进行阻止事件默认行为</p>
+			<a href="http://www.baidu.com" @click.prevent="test7">去百度</a>
+			
+			<h3>按键修饰符</h3>
+			<p>我们就可以当按下某个键时执行这个方法,一般使用在input</p>
+			<input type="text" @keyup.m="test8">
+			<input type="text" @keyup.enter="test8">
 		</dvi>
 		<script type="text/jscript">
 			new Vue({
-				el : '#app',
-				data : {
-					test1(){
+				el: '#app',
+				data: {
+					test1() {
 						alert('事件一');
 					},
-					test2(parm){
+					test2(parm) {
 						alert(parm);
 					},
-					test3(event){
+					test3(event) {
 						<!-- 可以传一个事件源对象 -->
 						<!-- console.log(event) -->
 						alert(event.target.innerText);
 					},
-					test4(number , event){
+					test4(number, event) {
 						alert(number + '========' + event.target.innerText)
+					},
+					test5() {
+						alert("out");
+					},
+					test6() {
+						alert("inner");
+					},
+					test7() {
+						alert("点击了test7");
+					},
+					test8(){
+						alert("test8");
 					}
 				}
 			})
 		</script>
+
+
+
+
 	</body>
 </html>
